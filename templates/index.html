@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Generate Text</title>
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<!-- JavaScript Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+	<style>
+		#main-div {
+			text-align: center;
+			width: 40%;
+			margin: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-ms-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+		}
+	</style>
+	<script>
+		let loading_gif = '<br /><img width="50px" src="/static/loading.gif" />';
+		$(document).ready(function() {
+			$('#submit-button').click(function() {
+				let seed_text = $('#input-text').val();
+				if (seed_text.length == 0) {
+					return;
+				}
+				$('#output-div').html(loading_gif);
+				$.post("/api", {'seed_text': seed_text}, function(data, status){
+					$('#output-div').html(data);
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+
+	<div id="main-div">
+		<h1>Text Generator</h1>
+		<p><input id="input-text" class="form-control form-control-lg" type="text" placeholder="Enter seed sentence/text..." aria-label="Enter seed sentence/text..."></p>
+		<button id="submit-button" type="button" class="btn btn-success btn-lg">Submit</button>
+		<br />
+		<h2 id="output-div">...</h2>
+	</div>
+
+</body>
+</html>

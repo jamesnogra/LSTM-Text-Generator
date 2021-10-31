@@ -70,3 +70,5 @@ def get_model_api():
 					break
 			seed_text += " " + output_word
 		return seed_text
+		
+	return model_api
